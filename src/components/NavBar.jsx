@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BookOpenIcon, MagnifyingGlassCircleIcon } from '@heroicons/react/24/outline'
 
 const NavBar = () => {
@@ -11,6 +11,25 @@ const NavBar = () => {
         handleSearch(searchTem);
     };
 
+    useEffect(()=>{
+        const handleMouseMove = (e)=>{
+            const cards = document.querySelectorAll(".dynamic-gradient")
+            cards.forEach((card)=>{
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX-rect.left;
+                const y = e.clientY-rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`)
+                card.style.setProperty('--mouse-y', `${y}px`)
+            })
+        }
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return ()=> window.removeEventListener('mousemove', handleMouseMove)
+    },[])
+
+    useEffect(()=>{
+        window.scrollTo(0,0);
+    },)
     return (
         <nav className='sticky top-0 bg-gray-900/95 backdrop-blur-2xl border-b 
         border-gray-800 shadow-[0_0_60px_-15px_rgba(96,165,250,0.3)] overflow-hidden'>
@@ -69,7 +88,21 @@ const NavBar = () => {
                         </form>
                     </div>
                     {/*Avatar section*/}
-                    
+                    <div className='flex items-center space-x-4 order-2 md:order-3 ml-auto md:ml-0 '>
+                        <button className='relative p-1 group hover:scale-105 transition-transform'>
+                            <div className='absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500
+                            rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity'/>
+                            <div className='relative flex items-center justify-center w-8 h-8 md:h-10 md:w-10
+                            rounded-full bg-gray-900/80 border-2 border-cyan-300/20 group-hover:border-cyan-300/40
+                            backdrop-blur-sm overflow-hidden'>
+                                <span className='text-lg md:text-xl animate-holo'>&#x1F47D;</span>
+                                <div className='absolute inset-0 bg-gradient-to-br from-cyan-400/20 
+                                via-transparent to-blue-500/20'/>
+                            </div>
+                            <div className='absolute -top-1 -right-1 h-2 w-2 md:h-3 md:w-3
+                            bg-cyan-400 rounded-full shadow-glow-pulse'/>
+                        </button>
+                    </div>
                 </div>
             </div>
         </nav>
