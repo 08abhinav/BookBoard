@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import NavBar from './components/NavBar'
 import Banner from './components/Banner'
+import Hero from './components/Hero'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [searchQuery, setSearchQuery] = useState('best sellers')
 
   return (
     <>
       <div className='min-h-screen bg-gray-900'>
-        <NavBar/>
+        <NavBar handleSearch={(term)=> setSearchQuery(term)}/>
         <Banner/>
+        <Hero/>
       </div>
     </>
   )
